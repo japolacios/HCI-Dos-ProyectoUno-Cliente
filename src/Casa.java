@@ -1,13 +1,14 @@
-
-
-
+import processing.core.PApplet;
 
 public class Casa {
 	private int habitantes;
 	private int energia;
 	private int capacidad;
 	private int consumo;
-	public Casa() {	
+	private PApplet app;
+	public Casa(PApplet app) {
+		System.out.println("Initializing New Casa");
+		this.app = app;
 		init();
 	}
 	
@@ -17,9 +18,9 @@ public class Casa {
 		asignarPoblacion();
 	}
 	
-	
 	public void asignarPoblacion() {
-		//TODO: darle a habitantes un numero random entre 1 y 5
+		habitantes = (int)app.random(1,5);
+		System.out.println("Numero de Habitantes en Casa: "+habitantes);
 		asignarConsumo();
 	}
 	
@@ -31,7 +32,7 @@ public class Casa {
 		//TODO: Resta el consumo a la energia total, en caso de que la energia local se termine, tomar la de la bateria
 	}
 	
-	public void verificarVidaa() {
+	public void verificarVida() {
 		//TODO: Verificar si queda energia para sustentar la casa y si no muere
 	}
 	
