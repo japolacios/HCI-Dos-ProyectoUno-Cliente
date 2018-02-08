@@ -11,7 +11,7 @@ public class Ciudad extends PApplet{
 
 	public void settings() {
 		System.out.println("Set Canvas Size");
-		size(1024, 760);
+		size(1920, 1080);
 	}
 
 	public void init() {
