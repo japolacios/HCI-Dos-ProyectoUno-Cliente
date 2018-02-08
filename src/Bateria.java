@@ -1,4 +1,4 @@
-package proyectoUnoHciDos;
+
 
 public class Bateria {
 private int capacidad;
