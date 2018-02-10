@@ -5,6 +5,7 @@ public class Casa {
 	private int energia;
 	private int capacidad;
 	private int consumo;
+	private int energiaPendiente;
 	private PApplet app;
 	public Casa(PApplet app) {
 		System.out.println("Initializing New Casa");
@@ -14,7 +15,7 @@ public class Casa {
 	
 	public void init() {
 		energia = 300;
-		capacidad = 400;
+		capacidad = 300;
 		asignarPoblacion();
 	}
 	
@@ -29,15 +30,53 @@ public class Casa {
 		System.out.println("consumo de energia por casa:" + consumo);
 	}
 	
-	public void consumirTurno() {
-		//TODO: Resta el consumo a la energia total, en caso de que la energia local se termine, tomar la de la bateria
+	
+	//Verifica si la energia que tiene le alcanza para el autosustento, si no, guarda lo que le queda faltando
+	//en energiaPendiente para que se le pueda dar desde la bateria
+	public boolean consumirEnergia() {
+		boolean needBateria = false;
+		//Si no le alcanza su auto energia
+		if (energia - consumo <= 0) {
+			needBateria = true;
+			energiaPendiente = -1*(energia - consumo);
+			energia = 0;
+		} else {
+			//Si le alcanza la energia -> Se resta
+			energia = energia - consumo;
+		}
+		return needBateria;
 	}
 	
-	public void verificarVida() {
-		if (energia < consumo) {
-			System.out.println("Casa muere");
-		} else {
-			System.out.println("Casa vive otro dia");
-		}
+	
+	public void killPeople() {
+		
+	}
+	
+	public int getEnergiaPendiente() {
+		return energiaPendiente;
+	}
+	
+	public void setEnergiaPendiente(int _newPendiente) {
+		energiaPendiente = _newPendiente;
+	}
+	
+	public int getHabitantes() {
+		return habitantes;
+	}
+	
+	public void setHabitantes( int _habitantes) {
+		habitantes = _habitantes;
+	}
+	
+	public int getCapacidad() {
+		return capacidad;
+	}
+	
+	public int getConsumo() {
+		return consumo;
+	}
+	
+	public int getEnergia() {
+		return energia;
 	}
 }

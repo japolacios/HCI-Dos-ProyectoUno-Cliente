@@ -1,23 +1,29 @@
+import processing.core.PApplet;
+
 public class Bateria {
 	private int capacidad;
 	private int carga;
-	public int caso;
+	private int caso;
+	private PApplet app;
 
-	public Bateria(int _capacidad) {
+	public Bateria(int _capacidad, PApplet _app) {
 		// TODO Auto-generated constructor stub
 		capacidad = _capacidad;
 		_capacidad = 400;
 		caso = 0;
+		app = _app;
 	}
 
 	public void recibirCarga(int _energia) {
-		// TODO: Recibe la energia para cargar la bateria
 			carga += _energia;
 	}
 
 	public void donarEnergia(int _energia) {
-		// TODO: envia energia para las casas y la descuenta de la carga
 		carga -= _energia;
+	}
+	
+	public int getCarga() {
+		return carga;
 	}
 
 	public void mejorar() {
@@ -50,4 +56,11 @@ public class Bateria {
 		}
 	}
 
+	public int getCaso() {
+		return caso;
+	}
+	
+	public int getCapacidad() {
+		return capacidad;
+	}
 }
