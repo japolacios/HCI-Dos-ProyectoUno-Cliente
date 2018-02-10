@@ -1,4 +1,4 @@
-import processing.core.PApplet;
+import processing.core.*;
 
 public class Casa {
 	private int habitantes;
@@ -19,13 +19,14 @@ public class Casa {
 	}
 	
 	public void asignarPoblacion() {
-		habitantes = (int)app.random(1,5);
+		habitantes = (int)app.random(3,6);
 		System.out.println("Numero de Habitantes en Casa: "+habitantes);
 		asignarConsumo();
 	}
 	
 	public void asignarConsumo() {
-		//TODO: Calcular el consumo dependiendo de los habitantes
+		consumo = 100 + (habitantes * 50);
+		System.out.println("consumo de energia por casa:" + consumo);
 	}
 	
 	public void consumirTurno() {
@@ -33,9 +34,10 @@ public class Casa {
 	}
 	
 	public void verificarVida() {
-		//TODO: Verificar si queda energia para sustentar la casa y si no muere
+		if (energia < consumo) {
+			System.out.println("Casa muere");
+		} else {
+			System.out.println("Casa vive otro dia");
+		}
 	}
-	
-	
-	
 }
