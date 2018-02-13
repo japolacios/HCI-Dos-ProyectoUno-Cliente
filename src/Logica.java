@@ -1,14 +1,18 @@
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import processing.core.PApplet;
 
-public class Logica {
+public class Logica implements Observer {
 	
 	//Atributos
 	private ArrayList<Casa> casas;
 	private PApplet app;
 	private Bateria bateria;
-	
+	private Communicacion com;
+	private int col;
+	private boolean turn;
 	
 	//Other Vars
 	private int capacidadInicialBateria = 2000;
@@ -21,6 +25,12 @@ public class Logica {
 	
 	public void init(){
 		System.out.println("Initializing Logic Classes");
+		com = new Communicacion();
+		new Thread(com).start();
+		com.setBoss(this);
+		com.setId(1);
+
+		col = 0;
 		initCasas();
 		initBateria();
 		collectData();
@@ -113,6 +123,29 @@ public class Logica {
 	//---------------------------------
 	public void initBateria() {
 		bateria = new Bateria(capacidadInicialBateria,app);
+	}
+	
+	
+	
+	public void update(Observable o, Object arg) {
+		if (arg instanceof Validation) {
+			Validation val = (Validation) arg;
+			if (val.isCheck()) {
+				if (val.getType().contains("start")) {
+					if (col == 0) {
+						col = 150;
+					} else {
+						col = 0;
+					}
+				} else if (val.getType().contains("yourTurn")) {
+					turn = true;
+				}
+			} else {
+				if (val.getType().contains("yourTurn")) {
+					turn = false;
+				}
+			}
+		}
 	}
 	
 }
