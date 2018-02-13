@@ -11,6 +11,7 @@ public class Logica implements Observer {
 	private PApplet app;
 	private Bateria bateria;
 	private Communicacion com;
+	private Ui ui;
 	private int col;
 	private boolean turn;
 	
@@ -31,11 +32,20 @@ public class Logica implements Observer {
 		com.setId(1);
 
 		col = 0;
+		
+		ui = new Ui(app,1);
 		initCasas();
 		initBateria();
 		collectData();
+		newCasa();
+		newCasa();
+		newCasa();
 		terminaraTurno();
 		collectData();
+		newCasa();
+		newCasa();
+		newCasa();
+		newCasa();
 	}
 	
 	//---------------------------------
@@ -116,6 +126,7 @@ public class Logica implements Observer {
 		Casa casa;
 		casa = new Casa(app);
 		casas.add(casa);
+		System.out.println("Casa agregada");
 	}
 	
 	//---------------------------------
@@ -146,6 +157,10 @@ public class Logica implements Observer {
 				}
 			}
 		}
+	}
+	
+	public void pintar() {
+		ui.pintarCasas(casas);
 	}
 	
 }

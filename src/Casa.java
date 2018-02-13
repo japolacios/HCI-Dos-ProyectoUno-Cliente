@@ -1,6 +1,12 @@
+import java.io.Serializable;
+
 import processing.core.*;
 
-public class Casa {
+public class Casa implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int habitantes;
 	private int energia;
 	private int capacidad;
