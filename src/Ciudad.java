@@ -25,6 +25,7 @@ public class Ciudad extends PApplet {
 	}
 
 	public void draw() {
+		background(0, 0, 0);
 		logica.pintar();
 	}
 }

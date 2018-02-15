@@ -16,8 +16,6 @@ public class Ui {
 	public Ui (PApplet app, int estacion){
 		this.app = app;
 		this.estacion = estacion;
-		posX = app.random(app.width);
-		posY = app.random(app.height);
 		init();
 		System.out.println("Se inicializa todo del Ui");
 	
@@ -59,6 +57,8 @@ public class Ui {
 	public void pintarCasas( ArrayList<Casa> _casas) {
 			
 		for (int i = 0; i < _casas.size(); i++) {
+			posX = app.random(app.width);
+			posY = app.random(app.height);
 			app.image(casa.get(estacion), posX, posY); 
 		}
 	}

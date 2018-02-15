@@ -37,9 +37,6 @@ public class Logica implements Observer {
 		initCasas();
 		initBateria();
 		collectData();
-		newCasa();
-		newCasa();
-		newCasa();
 		terminaraTurno();
 		collectData();
 		newCasa();
