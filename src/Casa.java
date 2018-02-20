@@ -12,10 +12,13 @@ public class Casa implements Serializable {
 	private int capacidad;
 	private int consumo;
 	private int energiaPendiente;
+	private float x,y;
 	private PApplet app;
-	public Casa(PApplet app) {
+	public Casa(PApplet app, float _x, float _y) {
 		System.out.println("Initializing New Casa");
 		this.app = app;
+		x = _x;
+		y = _y;
 		init();
 	}
 	
@@ -84,5 +87,13 @@ public class Casa implements Serializable {
 	
 	public int getEnergia() {
 		return energia;
+	}
+	
+	public float getX() {
+		return x;
+	}
+	
+	public float getY() {
+		return y;
 	}
 }

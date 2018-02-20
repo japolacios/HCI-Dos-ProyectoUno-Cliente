@@ -21,11 +21,23 @@ public class Ciudad extends PApplet {
 
 	public void setup() {
 		System.out.println("Initializing App");
+		imageMode(CENTER);
+		textMode(CENTER);
+		textAlign(CENTER);
+		fill(0,0,0);
 		init();
 	}
 
 	public void draw() {
-		background(0, 0, 0);
+		background(255, 255, 255);
 		logica.pintar();
 	}
+	
+	public void mouseClicked() {
+		logica.clcik();
+	}
+	
+	public void keyPressed() {
+		  logica.keyPressed();
+		  }
 }
