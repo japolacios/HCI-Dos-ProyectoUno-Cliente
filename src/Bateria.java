@@ -60,6 +60,10 @@ public class Bateria {
 		return caso;
 	}
 	
+	public void setCaso(int _caso) {
+		caso = _caso;
+	}
+	
 	public int getCapacidad() {
 		return capacidad;
 	}

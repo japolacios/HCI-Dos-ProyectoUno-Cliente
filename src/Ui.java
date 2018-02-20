@@ -100,6 +100,7 @@ public class Ui {
 
 	public void pintarBateria(int _lvl) {
 		app.image(bateria.get(_lvl), app.width / 5, app.height / 3);
+		//System.out.println("El nivel de la Bateria es: "+ _lvl);
 	}
 
 	public void pintarUi() {

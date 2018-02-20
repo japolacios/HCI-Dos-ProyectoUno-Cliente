@@ -280,10 +280,14 @@ public class Logica implements Observer {
 				askEnergyEnabled = true;
 				return;
 			} else {
-				// Metodo Pedir energia
 				askEnergyEnabled = false;
 				return;
 			}
+		}
+		if(askEnergyEnabled == true) {
+			// Metodo Pedir energia
+			sendEnergyRequest();
+			askEnergyEnabled = false;
 		}
 	}
 
@@ -317,7 +321,10 @@ public class Logica implements Observer {
 		if (caso <= 2) {
 			System.out.println("Upgradeseando Bateria");
 			if(energiaTotal>= bateria.getCosto()) {
+			bateria.donarEnergia(bateria.getCosto());
+			bateria.setCaso(caso+1);
 			bateria.mejorar();
+			collectData();
 			} else {
 				System.out.println("No hay luka");
 			}
@@ -337,25 +344,26 @@ public class Logica implements Observer {
 
 	public void sendEnergyRequest() {
 		Validation tempVal = new Validation(true, 3, 0);
-		// 25%
-		if (true) {
-			tempVal.setEnergy((int) (capacidadTotal * 0.25));
+		// 20%
+		if (app.mouseX < app.width/5) {
+			tempVal.setEnergy((int) (capacidadTotal * 0.20));
+			System.out.println("Pedidos 20%");
 		}
-		// 50%
-		if (true) {
-			tempVal.setEnergy((int) (capacidadTotal * 0.5));
+		// 40%
+		if (app.mouseX < (app.width/5)*2 && app.mouseX <= (app.width/5)) {
+			tempVal.setEnergy((int) (capacidadTotal * 0.4));
 		}
-		// 75%
-		if (true) {
-			tempVal.setEnergy((int) (capacidadTotal * 0.75));
+		// 60%
+		if (app.mouseX < (app.width/5)*3 && app.mouseX <= (app.width/5)*2) {
+			tempVal.setEnergy((int) (capacidadTotal * 0.6));
+		}
+		// 80%
+		if (app.mouseX < (app.width/5)*4 && app.mouseX <= (app.width/5)*3) {
+			tempVal.setEnergy((int) (capacidadTotal * 0.8));
 		}
 		// 100%
-		if (true) {
+		if (app.mouseX < (app.width/5)*5 && app.mouseX <= (app.width/5)*4) {
 			tempVal.setEnergy((int) (capacidadTotal * 1));
-		}
-		// 125%
-		if (true) {
-			tempVal.setEnergy((int) (capacidadTotal * 1.25));
 		}
 		// 150%
 		if (true) {
@@ -372,6 +380,7 @@ public class Logica implements Observer {
 
 		try {
 			com.enviar(tempVal);
+			System.out.println("Peticion de Energia enviada");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
