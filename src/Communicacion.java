@@ -12,7 +12,7 @@ public class Communicacion implements Runnable {
 	private int id;
 
 	private final static int PORT = 5000;
-	private final static String ADDRESS = "192.168.0.110";
+	private final static String ADDRESS = "169.254.142.73";
 	private boolean life;
 
 	public Communicacion() {

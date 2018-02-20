@@ -18,15 +18,15 @@ public class Logica implements Observer {
 	private int scene;
 	private boolean addCasaEnabled;
 	private boolean askEnergyEnabled;
-	
-	//Datos
+
+	// Datos
 	int capacidadTotal = 0;
 	int casasTotales = 0;
 	int habitantesTotales = 0;
 	int energiaTotal = 0;
 	int energiaBateria = 0;
 	int consumoTotal = 0;
-	
+
 	// Other Vars
 	private int capacidadInicialBateria = 2000;
 
@@ -52,13 +52,15 @@ public class Logica implements Observer {
 		col = 0;
 
 		ui = new Ui(app, 0);
+		//Change for Start
 		scene = 1;
 		changeScene(scene);
 		initCasas();
 		initBateria();
 		collectData();
 		sendCityData();
-		//newCasa();
+		turn = true;
+		// newCasa();
 	}
 
 	// ---------------------------------
@@ -93,10 +95,38 @@ public class Logica implements Observer {
 			}
 
 		}
+		collectData();
 	}
 
 	public void terminaraTurno() {
 		generarConsumo();
+		if (casasTotales <= 0) {
+			sendDead();
+		} else {
+			sendImDone();
+		}
+	}
+
+	public void sendDead() {
+		Validation tempVal = new Validation(true, 6, 0);
+
+		try {
+			com.enviar(tempVal);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void sendImDone() {
+		Validation tempVal = new Validation(true, 5, 0);
+
+		try {
+			com.enviar(tempVal);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// ---------------------------------
@@ -133,7 +163,7 @@ public class Logica implements Observer {
 	public void initCasas() {
 		Casa casa;
 		casas = new ArrayList<Casa>();
-		casa = new Casa(app, app.width/2, app.height/2);
+		casa = new Casa(app, app.width / 2, app.height / 2);
 		casas.add(casa);
 	}
 
@@ -154,20 +184,25 @@ public class Logica implements Observer {
 	public void update(Observable o, Object arg) {
 		if (arg instanceof Validation) {
 			Validation val = (Validation) arg;
-			if (val.isCheck()) {
-				if (val.getType().contains("start")) {
-					if (col == 0) {
-						col = 150;
-					} else {
-						col = 0;
-					}
-				} else if (val.getType().contains("yourTurn")) {
-					turn = true;
-				}
-			} else {
-				if (val.getType().contains("yourTurn")) {
-					turn = false;
-				}
+			//Enable
+			if (val.getType() == 1) {
+				turn = true;
+			}
+			//Disable
+			if (val.getType() == 2) {
+				turn = false;
+			}
+			//GetEnergy
+			if (val.getType() == 4) {
+				bateria.recibirCarga(val.getEnergy());
+			}
+			//Someone died
+			if (val.getType() == 7) {
+				//GAMEOVER
+			}
+			//Start Game
+			if (val.getType() == 8) {
+				changeScene(1);
 			}
 		}
 	}
@@ -197,34 +232,34 @@ public class Logica implements Observer {
 	}
 
 	public void gameScreen() {
-		if(scene == 3) {
+		if (scene == 3) {
 			ui.pintarCasas(casas);
 			ui.pintarBateria(bateria.getCaso());
 			pintarDatos();
 			pintarSecundarios();
 		}
 	}
-	
+
 	public void pintarDatos() {
 		app.textSize(20);
 		ui.pintarPoblacion(habitantesTotales);
 		ui.pintarNumCasas(casasTotales);
 		ui.pintarEnergia(energiaTotal, capacidadTotal);
 	}
-	
+
 	public void clcik() {
-		if(scene ==2) {
+		if (scene == 2) {
 			changeScene(3);
 		}
-		if (scene ==3) {
+		if (scene == 3) {
 			clickScene3();
 		}
 	}
-	
+
 	public void clickScene3() {
-		//Boton Construir
-		if (app.dist(app.mouseX, app.mouseY, 1765, 777) <= 60) {
-			if(addCasaEnabled == false) {
+		// Boton Construir
+		if (app.dist(app.mouseX, app.mouseY, 1765, 777) <= 60 && turn == true) {
+			if (addCasaEnabled == false) {
 				addCasaEnabled = true;
 				return;
 			} else {
@@ -232,61 +267,111 @@ public class Logica implements Observer {
 				return;
 			}
 		} else {
-			if(addCasaEnabled == true) {
+			if (addCasaEnabled == true) {
 				newCasa();
 				addCasaEnabled = false;
 				collectData();
 				return;
 			}
 		}
-		//Ventana de pedir energia
-		if (app.dist(app.mouseX, app.mouseY, 1765, 961) <= 60) {
-			if(askEnergyEnabled == false) {
+		// Ventana de pedir energia
+		if (app.dist(app.mouseX, app.mouseY, 1765, 961) <= 60 && turn == true) {
+			if (askEnergyEnabled == false) {
 				askEnergyEnabled = true;
 				return;
 			} else {
-				//Metodo Pedir energia
+				// Metodo Pedir energia
 				askEnergyEnabled = false;
 				return;
 			}
 		}
 	}
-	
+
 	public void pintarSecundarios() {
 		if (addCasaEnabled == true) {
-			app.text("Agregar Casa nueva Aqui", app.mouseX, app.mouseY+25);
-			//Cobrar Casa
+			app.text("Agregar Casa nueva Aqui", app.mouseX, app.mouseY + 25);
+			// Cobrar Casa
 		} else {
-			//Nadita
+			// Nadita
 		}
-		
-		if(askEnergyEnabled == true) {
-			//Pintar cosito energia
+
+		if (askEnergyEnabled == true) {
+			// Pintar cosito energia
 			ui.pintarPedirEnergia();
 		}
 	}
-	
+
 	public void keyPressed() {
-		//Terminar turno
-		if(app.key == 't') {
+		// Terminar turno
+		if (app.key == 't' && turn == true) {
 			System.out.println("Turno Terminado");
-			generarConsumo();
-			sendCityData();
-			
-			try {
-				com.enviar('t');
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			terminaraTurno();
+		}
+		if (app.key == 'u' && turn == true) {
+			upgradeBateria();
+		}
+	}
+
+	public void upgradeBateria() {
+		int caso = bateria.getCaso();
+		if (caso <= 2) {
+			System.out.println("Upgradeseando Bateria");
+			if(energiaTotal>= bateria.getCosto()) {
+			bateria.mejorar();
+			} else {
+				System.out.println("No hay luka");
 			}
 		}
 	}
-	
+
 	public void sendCityData() {
 		collectData();
-		City cityTemp = new City(energiaTotal,habitantesTotales,casasTotales,capacidadTotal);
+		City cityTemp = new City(energiaTotal, habitantesTotales, casasTotales, capacidadTotal);
 		try {
 			com.enviar(cityTemp);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void sendEnergyRequest() {
+		Validation tempVal = new Validation(true, 3, 0);
+		// 25%
+		if (true) {
+			tempVal.setEnergy((int) (capacidadTotal * 0.25));
+		}
+		// 50%
+		if (true) {
+			tempVal.setEnergy((int) (capacidadTotal * 0.5));
+		}
+		// 75%
+		if (true) {
+			tempVal.setEnergy((int) (capacidadTotal * 0.75));
+		}
+		// 100%
+		if (true) {
+			tempVal.setEnergy((int) (capacidadTotal * 1));
+		}
+		// 125%
+		if (true) {
+			tempVal.setEnergy((int) (capacidadTotal * 1.25));
+		}
+		// 150%
+		if (true) {
+			tempVal.setEnergy((int) (capacidadTotal * 1.50));
+		}
+		// 175%
+		if (true) {
+			tempVal.setEnergy((int) (capacidadTotal * 1.75));
+		}
+		// 200%
+		if (true) {
+			tempVal.setEnergy((int) (capacidadTotal * 2));
+		}
+
+		try {
+			com.enviar(tempVal);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
