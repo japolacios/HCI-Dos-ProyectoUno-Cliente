@@ -53,13 +53,13 @@ public class Logica implements Observer {
 
 		ui = new Ui(app, 0);
 		//Change for Start
-		scene = 1;
+		scene = 0;
 		changeScene(scene);
 		initCasas();
 		initBateria();
 		collectData();
 		sendCityData();
-		turn = true;
+		turn = false;
 		// newCasa();
 	}
 
@@ -187,10 +187,14 @@ public class Logica implements Observer {
 			//Enable
 			if (val.getType() == 1) {
 				turn = true;
+				//addCasaEnabled = true;
+				//askEnergyEnabled = true;
 			}
 			//Disable
 			if (val.getType() == 2) {
 				turn = false;
+				addCasaEnabled = false;
+				askEnergyEnabled = false;
 			}
 			//GetEnergy
 			if (val.getType() == 4) {
@@ -199,6 +203,9 @@ public class Logica implements Observer {
 			//Someone died
 			if (val.getType() == 7) {
 				//GAMEOVER
+				turn = false;
+				addCasaEnabled = false;
+				askEnergyEnabled = false;
 			}
 			//Start Game
 			if (val.getType() == 8) {
@@ -259,7 +266,7 @@ public class Logica implements Observer {
 	public void clickScene3() {
 		// Boton Construir
 		if (app.dist(app.mouseX, app.mouseY, 1765, 777) <= 60 && turn == true) {
-			if (addCasaEnabled == false) {
+			if (addCasaEnabled == false && turn == true) {
 				addCasaEnabled = true;
 				return;
 			} else {
@@ -267,7 +274,7 @@ public class Logica implements Observer {
 				return;
 			}
 		} else {
-			if (addCasaEnabled == true) {
+			if (addCasaEnabled == true && turn == true) {
 				newCasa();
 				addCasaEnabled = false;
 				collectData();
