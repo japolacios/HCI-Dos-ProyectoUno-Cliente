@@ -20,6 +20,7 @@ public class Ui {
 	private PImage btnEn;
 	private PImage btnEnOver;
 	private PImage energyW;
+	private PImage primavera, verano, otono, invierno;
 
 	// Houses & other assets
 	private ArrayList<PImage> casa;
@@ -40,7 +41,7 @@ public class Ui {
 		img_estacion = new ArrayList<>();
 		loadImages();
 		scene = 1;
-		estacion = 0;
+		//estacion = 0;
 		System.out.println("se cargan todas las imagenes");
 	}
 
@@ -49,6 +50,7 @@ public class Ui {
 		loadHouses();
 		loadBattery();
 		loadEstaciones();
+
 	}
 
 	public void loadHouses() {
@@ -90,11 +92,15 @@ public class Ui {
 		btnEn = app.loadImage("hud/btnEneroff.png");
 		btnEnOver = app.loadImage("hud/btnEneron.png");
 		energyW = app.loadImage("hud/pedircarga.png");
+		primavera = app.loadImage("fondo/Primavera.png");
+		otono = app.loadImage("fondo/Otono.png");
+		verano = app.loadImage("fondo/Verano.png");
+		invierno = app.loadImage("fondo/Invierno.png");
 	}
 
 	public void pintarCasas(ArrayList<Casa> _casas) {
 		for (int i = 0; i < _casas.size(); i++) {
-			app.image(casa.get(estacion), _casas.get(i).getX(), _casas.get(i).getY());
+			app.image(casa.get(0), _casas.get(i).getX(), _casas.get(i).getY());
 		}
 	}
 
@@ -103,6 +109,8 @@ public class Ui {
 		//System.out.println("El nivel de la Bateria es: "+ _lvl);
 	}
 
+
+	
 	public void pintarUi() {
 		if (scene == 0) {
 			pintarSplash();
@@ -129,7 +137,24 @@ public class Ui {
 	}
 
 	public void pintarMainGameHud() {
+		
+		if (estacion == 0) {
+			app.image(primavera, app.width/2, app.height/2);
+		}
+		if (estacion == 1) {
+			app.image(verano, app.width/2, app.height/2);
+		}
+		if (estacion == 2) {
+			app.image(otono, app.width/2, app.height/2);
+		}
+		if (estacion == 3) {
+			app.image(invierno, app.width/2, app.height/2);
+		}
+		
+		//System.out.println("Estacioncita: " + estacion	);
+		
 		app.image(mainHud, app.width / 2, app.height / 2);
+		
 		pintarIconoEstacion();
 		pintarBotones();
 	}
@@ -153,6 +178,12 @@ public class Ui {
 		}
 	}
 
+	public void pintarFondo() {
+		if(estacion == 0) {
+			app.image(verano, app.width/2, app.height/2);
+		}
+	}
+	
 	public void pintarEnergia(int _energia, int _capacidad) {
 		app.text(_energia + "/" + _capacidad, 270, 140);
 	}

@@ -23,8 +23,8 @@ public class Casa implements Serializable {
 	}
 	
 	public void init() {
-		energia = 300;
-		capacidad = 300;
+		energia = 0;
+		capacidad = 0;
 		asignarPoblacion();
 	}
 	

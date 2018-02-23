@@ -51,7 +51,7 @@ public class Logica implements Observer {
 		askEnergyEnabled = false;
 		col = 0;
 
-		ui = new Ui(app, 0);
+		ui = new Ui(app, 1);
 		//Change for Start
 		scene = 0;
 		changeScene(scene);
@@ -187,6 +187,7 @@ public class Logica implements Observer {
 			//Enable
 			if (val.getType() == 1) {
 				turn = true;
+				System.out.println("Turno Habilitado");
 				//addCasaEnabled = true;
 				//askEnergyEnabled = true;
 			}
@@ -195,6 +196,7 @@ public class Logica implements Observer {
 				turn = false;
 				addCasaEnabled = false;
 				askEnergyEnabled = false;
+				System.out.println("Turno Deshabilitado");
 			}
 			//GetEnergy
 			if (val.getType() == 4) {
@@ -317,6 +319,7 @@ public class Logica implements Observer {
 		if (app.key == 't' && turn == true) {
 			System.out.println("Turno Terminado");
 			terminaraTurno();
+			turn = false;
 		}
 		if (app.key == 'u' && turn == true) {
 			upgradeBateria();
