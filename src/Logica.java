@@ -18,6 +18,7 @@ public class Logica implements Observer {
 	private int scene;
 	private boolean addCasaEnabled;
 	private boolean askEnergyEnabled;
+	private boolean soyLast;
 
 	// Datos
 	int capacidadTotal = 0;
@@ -103,7 +104,12 @@ public class Logica implements Observer {
 		if (casasTotales <= 0) {
 			sendDead();
 		} else {
-			sendImDone();
+			if (!soyLast) {
+				sendImDone();
+			} else {
+				sendImLastDone();
+			}
+
 			sendCityData();
 		}
 	}
@@ -121,6 +127,17 @@ public class Logica implements Observer {
 
 	public void sendImDone() {
 		Validation tempVal = new Validation(true, 5, 0);
+
+		try {
+			com.enviar(tempVal);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendImLastDone() {
+		Validation tempVal = new Validation(true, 11, 0);
 
 		try {
 			com.enviar(tempVal);
@@ -183,6 +200,15 @@ public class Logica implements Observer {
 	}
 
 	public void update(Observable o, Object arg) {
+		if (arg instanceof Integer) {
+			int arg2 = (int) arg;
+			if (arg2 == 9) {
+				turn = false;
+				addCasaEnabled = false;
+				askEnergyEnabled = false;
+				System.out.println("Turno Deshabilitado");
+			}
+		}
 		if (arg instanceof Validation) {
 			Validation val = (Validation) arg;
 			// Enable
@@ -201,7 +227,9 @@ public class Logica implements Observer {
 			}
 			// GetEnergy
 			if (val.getType() == 4) {
+				// System.out.println("RECIBIDO" + val.getEnergy());
 				bateria.recibirCarga(val.getEnergy());
+				collectData();
 			}
 			// Someone died
 			if (val.getType() == 7) {
@@ -214,6 +242,10 @@ public class Logica implements Observer {
 			if (val.getType() == 8) {
 				changeScene(1);
 			}
+			if (val.getType() == 10) {
+				turn = true;
+				soyLast = true;
+			}
 		}
 	}
 
@@ -221,9 +253,9 @@ public class Logica implements Observer {
 		sceneLogic();
 		ui.pintarUi();
 		gameScreen();
-		if(turn==true)
-		app.text("ES EL TURNO PARA KNOW DA WAE!!", app.width/2, app.height/2);
-		
+		if (turn == true)
+			app.text("ES EL TURNO PARA KNOW DA WAE!!", app.width / 2, app.height / 2);
+
 	}
 
 	public void sceneLogic() {
@@ -320,13 +352,20 @@ public class Logica implements Observer {
 
 	public void keyPressed() {
 		// Terminar turno
-		if (app.key == 't' && turn == true) {
+		if (app.key == 't' && turn && !soyLast) {
 			System.out.println("Turno Terminado");
 			terminaraTurno();
 			turn = false;
+		} else if (app.key == 't' && turn && soyLast) {
+			System.out.println("Ultimo turno Terminado");
+			terminaraTurno();
+			turn = false;
+			soyLast = false;
+
 		}
 		if (app.key == 'u' && turn == true) {
 			upgradeBateria();
+			collectData();
 		}
 	}
 
@@ -381,7 +420,7 @@ public class Logica implements Observer {
 			tempVal.setEnergy((int) (capacidadTotal * 1));
 		}
 		// 120%
-		if (app.dist(app.mouseX, app.mouseY, 451, 748) < 80) {
+		if (app.dist(app.mouseX, app.mouseY, 451, 748) < 150) {
 			tempVal.setEnergy((int) (capacidadTotal * 1.20));
 		}
 		// 140%
@@ -399,6 +438,7 @@ public class Logica implements Observer {
 		// 200%
 		if (app.dist(app.mouseX, app.mouseY, 1398, 745) < 80) {
 			tempVal.setEnergy((int) (capacidadTotal * 2));
+			System.out.println("PEIDGUÑEO: " + tempVal.getEnergy());
 		}
 
 		try {
