@@ -14,7 +14,7 @@ public class Bateria {
 		caso = 0;
 		app = _app;
 		costo = 1500;
-		//carga = 2000;
+		carga = 500;
 	}
 
 	public void recibirCarga(int _energia) {

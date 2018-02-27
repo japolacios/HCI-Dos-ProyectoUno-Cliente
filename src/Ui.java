@@ -154,9 +154,7 @@ public class Ui {
 		//System.out.println("Estacioncita: " + estacion	);
 		
 		app.image(mainHud, app.width / 2, app.height / 2);
-		/*if (log.isTurn() == true) {
-		app.text("ES EL TURNO DA WAE!!!!", app.width/2, app.height/2);	
-		}*/
+		
 		pintarIconoEstacion();
 		pintarBotones();
 	}

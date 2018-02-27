@@ -52,7 +52,7 @@ public class Logica implements Observer {
 		col = 0;
 
 		ui = new Ui(app, 1);
-		//Change for Start
+		// Change for Start
 		scene = 0;
 		changeScene(scene);
 		initCasas();
@@ -185,33 +185,32 @@ public class Logica implements Observer {
 	public void update(Observable o, Object arg) {
 		if (arg instanceof Validation) {
 			Validation val = (Validation) arg;
-			//Enable
+			// Enable
 			if (val.getType() == 1) {
 				turn = true;
-				//System.out.println("ES EL TURNO PARA KNOW DA WAE!!");
 				System.out.println("Turno Habilitado");
-				//addCasaEnabled = true;
-				//askEnergyEnabled = true;
+				// addCasaEnabled = true;
+				// askEnergyEnabled = true;
 			}
-			//Disable
+			// Disable
 			if (val.getType() == 2) {
 				turn = false;
 				addCasaEnabled = false;
 				askEnergyEnabled = false;
 				System.out.println("Turno Deshabilitado");
 			}
-			//GetEnergy
+			// GetEnergy
 			if (val.getType() == 4) {
 				bateria.recibirCarga(val.getEnergy());
 			}
-			//Someone died
+			// Someone died
 			if (val.getType() == 7) {
-				//GAMEOVER
+				// GAMEOVER
 				turn = false;
 				addCasaEnabled = false;
 				askEnergyEnabled = false;
 			}
-			//Start Game
+			// Start Game
 			if (val.getType() == 8) {
 				changeScene(1);
 			}
@@ -298,7 +297,7 @@ public class Logica implements Observer {
 				return;
 			}
 		}
-		if(askEnergyEnabled == true) {
+		if (askEnergyEnabled == true) {
 			// Metodo Pedir energia
 			sendEnergyRequest();
 			askEnergyEnabled = false;
@@ -335,11 +334,11 @@ public class Logica implements Observer {
 		int caso = bateria.getCaso();
 		if (caso <= 2) {
 			System.out.println("Upgradeseando Bateria");
-			if(energiaTotal>= bateria.getCosto()) {
-			bateria.donarEnergia(bateria.getCosto());
-			bateria.setCaso(caso+1);
-			bateria.mejorar();
-			collectData();
+			if (energiaTotal >= bateria.getCosto()) {
+				bateria.donarEnergia(bateria.getCosto());
+				bateria.setCaso(caso + 1);
+				bateria.mejorar();
+				collectData();
 			} else {
 				System.out.println("No hay luka");
 			}
@@ -360,36 +359,45 @@ public class Logica implements Observer {
 	public void sendEnergyRequest() {
 		Validation tempVal = new Validation(true, 3, 0);
 		// 20%
-		if (app.mouseX < app.width/5) {
+		if (app.dist(app.mouseX, app.mouseY, 450, 305) < 60) {
 			tempVal.setEnergy((int) (capacidadTotal * 0.20));
 			System.out.println("Pedidos 20%");
+
 		}
 		// 40%
-		if (app.mouseX < (app.width/5)*2 && app.mouseX <= (app.width/5)) {
+		if (app.dist(app.mouseX, app.mouseY, 687, 299) < 60) {
 			tempVal.setEnergy((int) (capacidadTotal * 0.4));
 		}
 		// 60%
-		if (app.mouseX < (app.width/5)*3 && app.mouseX <= (app.width/5)*2) {
+		if (app.dist(app.mouseX, app.mouseY, 923, 299) < 60) {
 			tempVal.setEnergy((int) (capacidadTotal * 0.6));
 		}
 		// 80%
-		if (app.mouseX < (app.width/5)*4 && app.mouseX <= (app.width/5)*3) {
+		if (app.dist(app.mouseX, app.mouseY, 1157, 299) < 60) {
 			tempVal.setEnergy((int) (capacidadTotal * 0.8));
 		}
 		// 100%
-		if (app.mouseX < (app.width/5)*5 && app.mouseX <= (app.width/5)*4) {
+		if (app.dist(app.mouseX, app.mouseY, 1392, 299) < 60) {
 			tempVal.setEnergy((int) (capacidadTotal * 1));
 		}
-		// 150%
-		if (true) {
-			tempVal.setEnergy((int) (capacidadTotal * 1.50));
+		// 120%
+		if (app.dist(app.mouseX, app.mouseY, 451, 748) < 80) {
+			tempVal.setEnergy((int) (capacidadTotal * 1.20));
 		}
-		// 175%
-		if (true) {
-			tempVal.setEnergy((int) (capacidadTotal * 1.75));
+		// 140%
+		if (app.dist(app.mouseX, app.mouseY, 691, 581) < 80) {
+			tempVal.setEnergy((int) (capacidadTotal * 1.4));
+		}
+		// 160%
+		if (app.dist(app.mouseX, app.mouseY, 923, 743) < 80) {
+			tempVal.setEnergy((int) (capacidadTotal * 1.6));
+		}
+		// 180%
+		if (app.dist(app.mouseX, app.mouseY, 1165, 584) < 80) {
+			tempVal.setEnergy((int) (capacidadTotal * 1.8));
 		}
 		// 200%
-		if (true) {
+		if (app.dist(app.mouseX, app.mouseY, 1398, 745) < 80) {
 			tempVal.setEnergy((int) (capacidadTotal * 2));
 		}
 
