@@ -104,6 +104,7 @@ public class Logica implements Observer {
 			sendDead();
 		} else {
 			sendImDone();
+			sendCityData();
 		}
 	}
 
@@ -187,6 +188,7 @@ public class Logica implements Observer {
 			//Enable
 			if (val.getType() == 1) {
 				turn = true;
+				//System.out.println("ES EL TURNO PARA KNOW DA WAE!!");
 				System.out.println("Turno Habilitado");
 				//addCasaEnabled = true;
 				//askEnergyEnabled = true;
@@ -220,6 +222,9 @@ public class Logica implements Observer {
 		sceneLogic();
 		ui.pintarUi();
 		gameScreen();
+		if(turn==true)
+		app.text("ES EL TURNO PARA KNOW DA WAE!!", app.width/2, app.height/2);
+		
 	}
 
 	public void sceneLogic() {
