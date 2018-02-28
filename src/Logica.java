@@ -401,47 +401,55 @@ public class Logica implements Observer {
 	public void sendEnergyRequest() {
 		Validation tempVal = new Validation(true, 3, 0);
 		// 20%
-		if (app.dist(app.mouseX, app.mouseY, 450, 305) < 60) {
+		if (app.dist(app.mouseX, app.mouseY, 450, 305) < 100) {
 			tempVal.setEnergy((int) (capacidadTotal * 0.20));
 			System.out.println("Pedidos 20%");
 
 		}
 		// 40%
-		if (app.dist(app.mouseX, app.mouseY, 687, 299) < 60) {
+		if (app.dist(app.mouseX, app.mouseY, 687, 299) < 100) {
 			tempVal.setEnergy((int) (capacidadTotal * 0.4));
+			System.out.println("Pedidos 40%");
 		}
 		// 60%
-		if (app.dist(app.mouseX, app.mouseY, 923, 299) < 60) {
+		if (app.dist(app.mouseX, app.mouseY, 923, 299) < 100) {
 			tempVal.setEnergy((int) (capacidadTotal * 0.6));
+			System.out.println("Pedidos 60%");
 		}
 		// 80%
-		if (app.dist(app.mouseX, app.mouseY, 1157, 299) < 60) {
+		if (app.dist(app.mouseX, app.mouseY, 1157, 299) < 100) {
 			tempVal.setEnergy((int) (capacidadTotal * 0.8));
+			System.out.println("Pedidos 80%");
 		}
 		// 100%
-		if (app.dist(app.mouseX, app.mouseY, 1392, 299) < 60) {
+		if (app.dist(app.mouseX, app.mouseY, 1392, 299) < 100) {
 			tempVal.setEnergy((int) (capacidadTotal * 1));
+			System.out.println("Pedidos 100%");
 		}
 		// 120%
-		if (app.dist(app.mouseX, app.mouseY, 451, 748) < 150) {
+		if (app.dist(app.mouseX, app.mouseY, 451, 748) < 100) {
 			tempVal.setEnergy((int) (capacidadTotal * 1.20));
+			System.out.println("Pedidos 120%");
 		}
 		// 140%
-		if (app.dist(app.mouseX, app.mouseY, 691, 581) < 80) {
+		if (app.dist(app.mouseX, app.mouseY, 691, 581) < 100) {
 			tempVal.setEnergy((int) (capacidadTotal * 1.4));
+			System.out.println("Pedidos 140%");
 		}
 		// 160%
-		if (app.dist(app.mouseX, app.mouseY, 923, 743) < 80) {
+		if (app.dist(app.mouseX, app.mouseY, 923, 743) < 100) {
 			tempVal.setEnergy((int) (capacidadTotal * 1.6));
+			System.out.println("Pedidos 160%");
 		}
 		// 180%
-		if (app.dist(app.mouseX, app.mouseY, 1165, 584) < 80) {
+		if (app.dist(app.mouseX, app.mouseY, 1165, 584) < 100) {
 			tempVal.setEnergy((int) (capacidadTotal * 1.8));
+			System.out.println("Pedidos 180%");
 		}
 		// 200%
-		if (app.dist(app.mouseX, app.mouseY, 1398, 745) < 80) {
+		if (app.dist(app.mouseX, app.mouseY, 1398, 745) < 100) {
 			tempVal.setEnergy((int) (capacidadTotal * 2));
-			System.out.println("PEIDGUÑEO: " + tempVal.getEnergy());
+			System.out.println("Pedidos 200%");
 		}
 
 		try {
