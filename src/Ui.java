@@ -186,6 +186,7 @@ public class Ui {
 	
 	public void pintarEnergia(int _energia, int _capacidad) {
 		app.text(_energia + "/" + _capacidad, 270, 140);
+		//System.out.println("CAPACIDAD: " + _capacidad);
 	}
 
 	public void pintarPoblacion(int _poblacion) {

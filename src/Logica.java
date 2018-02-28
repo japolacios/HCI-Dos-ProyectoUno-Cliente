@@ -366,6 +366,8 @@ public class Logica implements Observer {
 		if (app.key == 'u' && turn == true) {
 			upgradeBateria();
 			collectData();
+			System.out.println("CAPACIDAD INICIAL: " + capacidadInicialBateria);
+			System.out.println("CAPACIDAD TOTAL: " + capacidadTotal);
 		}
 	}
 
@@ -375,9 +377,10 @@ public class Logica implements Observer {
 			System.out.println("Upgradeseando Bateria");
 			if (energiaTotal >= bateria.getCosto()) {
 				bateria.donarEnergia(bateria.getCosto());
-				bateria.setCaso(caso + 1);
 				bateria.mejorar();
+				bateria.setCaso(caso + 1);
 				collectData();
+				System.out.println("ESTOY EN EL CASO: " + caso);
 			} else {
 				System.out.println("No hay luka");
 			}
